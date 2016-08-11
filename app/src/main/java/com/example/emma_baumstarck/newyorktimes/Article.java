@@ -1,3 +1,5 @@
+package com.example.emma_baumstarck.newyorktimes;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,6 +59,17 @@ public class Article {
     }
 
     public static ArrayList<Article> fromJSONArray(JSONArray array ){
-        return null;
+
+        ArrayList<Article> results = new ArrayList<>();
+        for (int i = 0 ; i < array.length(); i++) {
+            try {
+                results.add(new Article(array.getJSONObject(i)));
+            } catch(JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        return results;
     }
 }
