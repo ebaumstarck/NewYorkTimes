@@ -1,112 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Begin Date"
+        android:text="@string/begin_date"
         android:id="@+id/beginDateText"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin" />
+        android:layout_marginTop="67dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="20dp"
+        android:layout_alignLeft="@+id/newsDeskText"
+        android:layout_alignStart="@+id/newsDeskText" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="N/A"
+        android:hint="@string/choose_a_date"
         android:id="@+id/startDateButton"
-        android:layout_below="@+id/beginDateText"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin" />
-
-    <!--
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/beginDateEdit"
         android:layout_gravity="center_horizontal"
-        android:layout_below="@+id/beginDateText"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin" />
-        -->
+        android:layout_alignTop="@+id/beginDateText"
+        android:layout_alignLeft="@+id/checkBoxArts"
+        android:layout_alignStart="@+id/checkBoxArts" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Sort Order"
+        android:text="@string/sort_order"
         android:id="@+id/sortOrderText"
+        android:layout_marginTop="64dp"
         android:layout_below="@+id/startDateButton"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin" />
+        android:layout_alignLeft="@+id/beginDateText"
+        android:layout_alignStart="@+id/beginDateText" />
 
     <Spinner
-        android:layout_width="wrap_content"
+        android:layout_width="221dp"
         android:layout_height="wrap_content"
         android:id="@+id/sortOrderSpinner"
-        android:layout_gravity="left"
-        android:layout_below="@+id/sortOrderText"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin" />
+        android:layout_alignTop="@+id/sortOrderText"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:spinnerMode="dropdown" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="News Desk Values"
+        android:text="@string/news_desk_values"
+        android:layout_marginLeft="20dp"
         android:id="@+id/newsDeskText"
-        android:layout_below="@+id/sortOrderText"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin" />
+        android:layout_centerVertical="true"
+        android:width="150dp" />
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Arts"
+        android:text="@string/arts"
         android:id="@+id/checkBoxArts"
-        android:layout_gravity="left"
-        android:layout_below="@+id/newsDeskText"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin" />
+        android:layout_alignTop="@+id/newsDeskText"
+        android:layout_toRightOf="@+id/saveButton"
+        android:layout_alignParentRight="true" />
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Fashion &amp; Style"
+        android:text="@string/fashion_amp_style"
         android:id="@+id/checkBoxFashionStyle"
-        android:layout_gravity="left"
         android:layout_below="@+id/checkBoxArts"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin" />
+        android:layout_alignLeft="@+id/checkBoxArts"
+        android:layout_alignStart="@+id/checkBoxArts" />
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sports"
+        android:text="@string/sports"
         android:id="@+id/checkBoxSports"
-        android:layout_gravity="left"
+        android:checked="false"
         android:layout_below="@+id/checkBoxFashionStyle"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin" />
+        android:layout_alignLeft="@+id/checkBoxFashionStyle"
+        android:layout_alignStart="@+id/checkBoxFashionStyle" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save"
+        android:text="@string/save"
         android:id="@+id/saveButton"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+        android:layout_marginBottom="55dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
-</LinearLayout>
+</RelativeLayout>

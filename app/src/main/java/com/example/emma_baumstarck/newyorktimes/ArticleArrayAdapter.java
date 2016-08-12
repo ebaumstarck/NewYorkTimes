@@ -13,13 +13,19 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by emma_baumstarck on 8/10/16.
  */
 public class ArticleArrayAdapter extends ArrayAdapter<Article> {
-    private static class ViewHolder {
-        ImageView imageView;
-        TextView title;
+     static class ViewHolder {
+        @BindView(R.id.ivImage) ImageView imageView;
+        @BindView(R.id.tvTitle) TextView title;
+        public ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
     }
 
 
@@ -32,20 +38,18 @@ public class ArticleArrayAdapter extends ArrayAdapter<Article> {
         Article article = getItem(position);
         ViewHolder viewHolder;
         if (convertView == null) {
-            viewHolder = new ViewHolder();
+            viewHolder = new ViewHolder(convertView);
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.item_article_result, parent, false);
-            viewHolder.imageView = (ImageView) convertView.findViewById(R.id.ivImage);
-            viewHolder.title = (TextView) convertView.findViewById(R.id.tvTitle);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
         viewHolder.title.setText(article.getHeadline());
-
         viewHolder.imageView.setImageResource(0);
         String thumbnail = article.getThumbNail();
+
         if(!TextUtils.isEmpty(thumbnail)){
             Picasso.with(getContext()).load(thumbnail).fit().centerCrop()
                     .into(viewHolder.imageView);

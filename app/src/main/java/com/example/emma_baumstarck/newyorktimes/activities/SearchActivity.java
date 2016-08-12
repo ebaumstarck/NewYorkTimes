@@ -15,8 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.GridView;
 
 import com.example.emma_baumstarck.newyorktimes.Article;
@@ -35,13 +33,14 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import cz.msebera.android.httpclient.Header;
 
 
 public class SearchActivity extends AppCompatActivity {
-    EditText etQuery;
-    GridView gvResults;
-    Button btnSearch;
+    @BindView(R.id.gvResults) GridView gvResults;
+    @BindView(R.id.toolbar) Toolbar toolbar;
 
     AsyncHttpClient client = new AsyncHttpClient();
     RequestParams params = new RequestParams();
@@ -62,9 +61,10 @@ public class SearchActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
         lastQuery = null;
@@ -79,11 +79,6 @@ public class SearchActivity extends AppCompatActivity {
         searchOptions.searchFashionStyle = false;
         searchOptions.searchSports = false;
 
-        setupViews();
-    }
-
-    public void setupViews(){
-        gvResults = (GridView) findViewById(R.id.gvResults);
         articles = new ArrayList<>();
         adpater = new ArticleArrayAdapter(this, articles);
         gvResults.setAdapter(adpater);
