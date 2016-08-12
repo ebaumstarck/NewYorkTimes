@@ -3,18 +3,19 @@ package com.example.emma_baumstarck.newyorktimes;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 import java.util.ArrayList;
 
 /**
  * Created by emma_baumstarck on 8/9/16.
  */
-
+@Parcel
 public class Article {
 
-    String webUrl;
-    String headline;
-    String thumbNail;
+    public String webUrl;
+    public String headline;
+    public String thumbNail;
 
     public String getWebUrl() {
         return webUrl;
@@ -40,6 +41,8 @@ public class Article {
         this.thumbNail = thumbNail;
     }
 
+    public Article() {}
+
     public Article(JSONObject jsonObject){
         try {
             this.webUrl = jsonObject.getString("web_url");
@@ -54,12 +57,11 @@ public class Article {
                 this.thumbNail = "";
             }
         } catch (JSONException e){
-
+            e.printStackTrace();
         }
     }
 
     public static ArrayList<Article> fromJSONArray(JSONArray array ){
-
         ArrayList<Article> results = new ArrayList<>();
         for (int i = 0 ; i < array.length(); i++) {
             try {

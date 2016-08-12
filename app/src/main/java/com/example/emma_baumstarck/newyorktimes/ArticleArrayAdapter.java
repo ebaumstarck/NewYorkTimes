@@ -17,7 +17,11 @@ import java.util.List;
  * Created by emma_baumstarck on 8/10/16.
  */
 public class ArticleArrayAdapter extends ArrayAdapter<Article> {
-   private List<Article> articles;
+    private static class ViewHolder {
+        ImageView imageView;
+        TextView title;
+    }
+
 
     public ArticleArrayAdapter(Context context, List<Article> articles){
         super(context, android.R.layout.simple_list_item_1,  articles);
@@ -25,29 +29,29 @@ public class ArticleArrayAdapter extends ArrayAdapter<Article> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
-        // Get the data item for this position
         Article article = getItem(position);
-        // Check if an existing view is being reused, otherwise inflate the view
+        ViewHolder viewHolder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_article_result, parent, false);
+            viewHolder = new ViewHolder();
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            convertView = inflater.inflate(R.layout.item_article_result, parent, false);
+            viewHolder.imageView = (ImageView) convertView.findViewById(R.id.ivImage);
+            viewHolder.title = (TextView) convertView.findViewById(R.id.tvTitle);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
-        // Lookup view for data population
-        ImageView imageView = (ImageView) convertView.findViewById(R.id.ivImage);
-//        clear our recycled image from convertView from last time
-        imageView.setImageResource(0);
 
-        TextView tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
+        viewHolder.title.setText(article.getHeadline());
 
-        tvTitle.setText(article.getHeadline());
-
+        viewHolder.imageView.setImageResource(0);
         String thumbnail = article.getThumbNail();
         if(!TextUtils.isEmpty(thumbnail)){
-            Picasso.with(getContext()).load(thumbnail).into(imageView);
+            Picasso.with(getContext()).load(thumbnail).fit().centerCrop()
+                    .into(viewHolder.imageView);
         }
 
         // Return the completed view to render on screen
         return convertView;
     }
-
 }

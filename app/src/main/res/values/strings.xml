@@ -2,4 +2,8 @@
     <string name="app_name">NewYorkTimes</string>
     <string name="search">Search</string>
     <string name="enter_search_query">Enter search query</string>
+    <string-array name="sort_order_array">
+        <item>Newest</item>
+        <item>Oldest</item>
+    </string-array>
 </resources>

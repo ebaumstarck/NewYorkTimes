@@ -5,60 +5,32 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SearchActivity">
+    tools:context=".activities.SearchActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:id="@+id/appBar">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
-            >
+            android:background="@color/colorPrimary">
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
-
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:hint="@string/enter_search_query"
-        android:width="250dp"
-        android:height="20dp"
-        android:textSize="15sp"
-        android:id="@+id/etQuery"
-        android:layout_marginTop="70dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        />
-
-    <Button
-        android:text="@string/search"
-        android:layout_marginRight="10dp"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnSearch"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:onClick="onArticleSearch"
-        android:layout_alignTop="@+id/etQuery"
-        android:layout_alignBottom="@+id/etQuery" />
-
 
     <GridView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/gvResults"
-        android:layout_below="@+id/etQuery"
-
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/appBar"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="80dp"
+        android:layout_marginLeft="10dp"
         android:numColumns="4" />
 
 </RelativeLayout>
