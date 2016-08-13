@@ -118,18 +118,15 @@ public class SearchActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Log.d("QUERY", "Query submitted: " + query);
-                adpater.clear();
                 onArticleSearch(query);
                 // workaround to avoid issues with some emulators and keyboard devices firing twice if a keyboard enter is used
                 // see https://code.google.com/p/android/issues/detail?id=24599
-                searchView.clearFocus();
-                return true;
+//                searchView.clearFocus();
+                return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                Log.d("QUERY", "Query changed: " + newText);
                 return false;
             }
         });
@@ -156,6 +153,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void onArticleSearch(String query) {
+        adpater.clear();
         lastQuery = query;
         lastQueryPageLoaded = -1;
         searchIsFinished = false;
@@ -194,20 +192,19 @@ public class SearchActivity extends AppCompatActivity {
             params.put("fq", "news_desk:(\"" + TextUtils.join("\" \"", filters) + "\")");
         }
 
-        Log.d("SEARCH2", params.toString());
+        Log.d("SEARCH", params.toString());
         client.get(SEARCH_URL, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Log.i("RESULTS", response.toString());
                 lastQueryPageLoaded = nextPage;
                 JSONArray articleJsonResults = null;
                 try {
                     articleJsonResults = response.getJSONObject("response").getJSONArray("docs");
+                    Log.d("RESULTS", "number: " + articleJsonResults.length());
                     articles.addAll(Article.fromJSONArray(articleJsonResults));
                     adpater.notifyDataSetChanged();
                     searchIsFinished = articleJsonResults.length() < ARTICLES_PER_PAGE;
                     if (!searchIsFinished && numArticlesLoaded() < MINIMUM_ARTICLES_TO_LOAD) {
-                        Log.d("PAGING", numArticlesLoaded() + "/" + MINIMUM_ARTICLES_TO_LOAD);
                         loadNextQueryPage();
                     }
                 } catch (JSONException e) {
