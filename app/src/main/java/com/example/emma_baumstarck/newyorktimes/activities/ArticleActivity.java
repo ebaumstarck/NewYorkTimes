@@ -24,6 +24,8 @@ public class ArticleActivity extends AppCompatActivity {
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.wvArticle) WebView webView;
 
+    Article article;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +34,7 @@ public class ArticleActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
-        Article article = (Article) Parcels.unwrap(getIntent().getParcelableExtra("article"));
+        article = (Article) Parcels.unwrap(getIntent().getParcelableExtra("article"));
 
         webView.setWebViewClient(new WebViewClient() {
             @Override
@@ -42,23 +44,20 @@ public class ArticleActivity extends AppCompatActivity {
             }
         });
         webView.loadUrl(article.getWebUrl());
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_search, menu);
+        inflater.inflate(R.menu.menu_article, menu);
 
         MenuItem item = menu.findItem(R.id.menu_item_share);
         ShareActionProvider miShare = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
 
-        // get reference to WebView
-        WebView wvArticle = (WebView) findViewById(R.id.wvArticle);
-        // pass in the URL currently being used by the WebView
-        shareIntent.putExtra(Intent.EXTRA_TEXT, wvArticle.getUrl());
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Saw this on New York Times");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, article.getWebUrl());
 
         miShare.setShareIntent(shareIntent);
         return super.onCreateOptionsMenu(menu);

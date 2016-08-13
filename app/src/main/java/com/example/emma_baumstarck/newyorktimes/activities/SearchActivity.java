@@ -44,8 +44,6 @@ public class SearchActivity extends AppCompatActivity {
 
     AsyncHttpClient client = new AsyncHttpClient();
     RequestParams params = new RequestParams();
-    public static final String SEARCH_URL = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
-    public static final String API_KEY = "76713f4d373043ce8347453635788cf8";
     ArrayList<Article> articles;
     ArticleArrayAdapter adpater;
 
@@ -56,6 +54,8 @@ public class SearchActivity extends AppCompatActivity {
     int lastQueryPageLoaded;
     boolean searchIsFinished;
 
+    public static final String SEARCH_URL = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
+    public static final String API_KEY = "76713f4d373043ce8347453635788cf8";
     private final int ARTICLES_PER_PAGE = 10;
     private final int MINIMUM_ARTICLES_TO_LOAD = 20;
 
@@ -96,7 +96,8 @@ public class SearchActivity extends AppCompatActivity {
         gvResults.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (firstVisibleItem + visibleItemCount >= totalItemCount) {
+                int numItems = firstVisibleItem + visibleItemCount;
+                if (numItems > 0 && numItems >= totalItemCount) {
                     Log.d("SCROLLING", firstVisibleItem + "/" + visibleItemCount + "/" + totalItemCount);
                     loadNextQueryPage();
                 }
@@ -104,7 +105,6 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
-
             }
         });
     }
@@ -194,11 +194,11 @@ public class SearchActivity extends AppCompatActivity {
             params.put("fq", "news_desk:(\"" + TextUtils.join("\" \"", filters) + "\")");
         }
 
-        Log.d("SEARCH", lastQuery + ": " + params.toString());
-
+        Log.d("SEARCH2", params.toString());
         client.get(SEARCH_URL, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                Log.i("RESULTS", response.toString());
                 lastQueryPageLoaded = nextPage;
                 JSONArray articleJsonResults = null;
                 try {
@@ -215,6 +215,5 @@ public class SearchActivity extends AppCompatActivity {
                 }
             }
         });
-//        Toast.makeText(this, "Search for" +query, Toast.LENGTH_LONG).show();
     }
 }

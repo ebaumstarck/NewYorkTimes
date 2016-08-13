@@ -17,25 +17,30 @@ import com.example.emma_baumstarck.newyorktimes.DatePickerFragment;
 import com.example.emma_baumstarck.newyorktimes.R;
 import com.example.emma_baumstarck.newyorktimes.SearchOptions;
 
+import org.parceler.Parcels;
+
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by emma_baumstarck on 8/12/16.
  */
 public class SearchOptionsFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
     @BindView(R.id.sortOrderSpinner) Spinner spinner;
-    @BindView(R.id.checkBoxArts) Button startDateButton;
+    @BindView(R.id.startDateButton) Button startDateButton;
     @BindView(R.id.saveButton) Button saveButton;
     @BindView(R.id.checkBoxArts) CheckBox checkBoxArts;
     @BindView(R.id.checkBoxFashionStyle) CheckBox checkBoxFashionStyle;
     @BindView(R.id.checkBoxSports) CheckBox checkBoxSports;
+    private Unbinder unbinder;
 
     SearchOptions searchOptions;
-
 
     public static SearchOptionsFragment newInstance(SearchOptions searchOptions) {
         SearchOptionsFragment fragment = new SearchOptionsFragment();
         fragment.searchOptions = searchOptions;
+
         return fragment;
     }
 
@@ -43,12 +48,14 @@ public class SearchOptionsFragment extends DialogFragment implements DatePickerD
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         getDialog().setTitle("Search Options");
-        return inflater.inflate(R.layout.search_options, container);
+        View view = inflater.inflate(R.layout.search_options, container);
+        unbinder = ButterKnife.bind(this, view);
+        return view;
     }
 
     private void setDateButtonText() {
         if (searchOptions.year <= 0) {
-            startDateButton.setText("N/A");
+            startDateButton.setText("Start Date");
         } else {
             startDateButton.setText(
                     (searchOptions.monthOfYear + 1) + "/" + searchOptions.dayOfMonth + "/" + (searchOptions.year % 100));
@@ -77,6 +84,11 @@ public class SearchOptionsFragment extends DialogFragment implements DatePickerD
             @Override
             public void onClick(View view) {
                 DatePickerFragment newFragment = new DatePickerFragment();
+
+                Bundle bundle = new Bundle();
+                bundle.putParcelable(DatePickerFragment.SEARCH_OPTIONS_KEY, Parcels.wrap(searchOptions));
+                newFragment.setArguments(bundle);
+
                 newFragment.show(getChildFragmentManager(), "datePicker");
                 newFragment.setOnDateListener(listener);
             }
@@ -100,5 +112,11 @@ public class SearchOptionsFragment extends DialogFragment implements DatePickerD
         searchOptions.monthOfYear = monthOfYear;
         searchOptions.dayOfMonth = dayOfMonth;
         setDateButtonText();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

@@ -28,7 +28,6 @@ public class ArticleArrayAdapter extends ArrayAdapter<Article> {
         }
     }
 
-
     public ArticleArrayAdapter(Context context, List<Article> articles){
         super(context, android.R.layout.simple_list_item_1,  articles);
     }
@@ -38,9 +37,9 @@ public class ArticleArrayAdapter extends ArrayAdapter<Article> {
         Article article = getItem(position);
         ViewHolder viewHolder;
         if (convertView == null) {
-            viewHolder = new ViewHolder(convertView);
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.item_article_result, parent, false);
+            viewHolder = new ViewHolder(convertView);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
